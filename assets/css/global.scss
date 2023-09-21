@@ -1,0 +1,34 @@
+:root {
+  --body-bg-color: var(--color-white);
+  --body-text-color: var(--color-gray-700);
+}
+
+body {
+  background: var(--body-bg-color);
+  color: var(--body-text-color);
+
+  @apply transition-colors duration-300;
+}
+
+.v-app-shell-content {
+  @apply bg-white dark:bg-gray-true-900
+}
+
+.nav-drawer-emerald {
+  --nav-drawer-bg-color: theme('colors.emerald.600');
+  --nav-drawer-text-color: theme('colors.white');
+}
+
+.dark {
+  body {
+    --body-bg-color: var(--color-gray-true-900);
+    --body-text-color: var(--color-gray-true-200);
+  }
+
+  // change default app bar dark mode bg color
+  // .app-bar-default {
+  //   --app-bar-bg-color: theme('colors.neutral.900') !important;
+  // }
+}
+
+  
