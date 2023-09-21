@@ -3,6 +3,7 @@ import type { VBreadcrumbItemProps } from '@morpheme/breadcrumbs'
 import type { VDataTableHeader } from '@morpheme/table'
 
 const { t } = useI18n()
+const productStore = useProductStore()
 
 definePageMeta({
   layout: 'dashboard',
@@ -20,10 +21,6 @@ useHead({
 })
 
 const headers = ref<VDataTableHeader[]>([
-  {
-    text: 'ID',
-    value: 'id',
-  },
   {
     text: 'Image',
     value: 'image',
@@ -49,20 +46,11 @@ const headers = ref<VDataTableHeader[]>([
   },
 ])
 
-const items = ref([
-  {
-    id: 1,
-    image: 'https://nuxt.com/assets/design-kit/logo/icon-green.svg',
-    name: 'Nuxt 3',
-    price: 12345,
-    category: 'Fashion',
-  },
-])
 const page = ref(1)
 const itemsPerPage = ref(10)
-const totalItems = ref(0)
-const loading = ref(false)
 const search = ref('')
+
+watchEffect(productStore.index)
 </script>
 
 <template>
@@ -78,7 +66,7 @@ const search = ref('')
         wrapper-class="w-full md:w-auto"
         prepend-icon="ri:search-line"
       />
-      <VBtn prefix-icon="tabler:plus" color="primary" :block="isMobile">
+      <VBtn to="/products/create" prefix-icon="tabler:plus" color="primary" :block="isMobile">
         Tambah
       </VBtn>
     </div>
@@ -86,24 +74,32 @@ const search = ref('')
       v-model:page="page"
       v-model:itemsPerPage="itemsPerPage"
       :headers="headers"
-      :items="items"
-      :total-items="totalItems"
-      :loading="loading"
+      :items="productStore.products"
+      :total-items="productStore.products.length"
+      :loading="productStore.isLoading"
       server-side
       hover
     >
       <template #item.image="{ item }">
         <NuxtImg
-          :src="item.image"
+          :src="item.images[0]"
           width="50"
           height="50"
           class="max-w-full rounded"
         />
       </template>
+      <template #item.name="{ item }">
+        <VText>{{ item.title }}</VText>
+      </template>
       <template #item.price="{ item }">
         {{
           item.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
         }}
+      </template>
+      <template #item.category="{ item }">
+        <VText class="capitalize">
+          {{ item.category }}
+        </VText>
       </template>
       <template #item.action="{ item }">
         <TableAction :id="item.id" path="/products" />

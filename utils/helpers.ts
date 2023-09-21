@@ -13,3 +13,7 @@ export function toCurrency(value: number) {
 export function toPercentage(value: number) {
   return `${(value * 100).toFixed(2)}%`
 }
+
+export function toCapitalize(value: string) {
+  return value.replace(/(?:^|\s|-)\S/g, x => x.toUpperCase())
+}

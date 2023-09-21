@@ -12,6 +12,8 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     'nuxt-vitest',
     '@vueuse/nuxt',
+    '@vee-validate/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
 
   runtimeConfig: {

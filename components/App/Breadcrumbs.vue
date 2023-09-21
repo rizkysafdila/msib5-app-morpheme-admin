@@ -14,14 +14,13 @@ const items = computed<VBreadcrumbItemProps[]>(() => {
       <VBreadcrumbsItem to="/">
         <VIcon name="tabler:home" class="p-1" />
       </VBreadcrumbsItem>
-      <VBreadcrumbsDivider>
-        <div v-for="item, index in items" :key="item.title">
-          <VBreadcrumbsDivider v-if="items.length !== index" />
-          <VBreadcrumbsItem class="ml-4" :to="item.to">
-            {{ item.title }}
-          </VBreadcrumbsItem>
-        </div>
-      </VBreadcrumbsDivider>
+      <VBreadcrumbsDivider />
+      <div v-for="item, index in items" :key="item.title">
+        <VBreadcrumbsItem :to="item.to">
+          {{ item.title }}
+        </VBreadcrumbsItem>
+        <VBreadcrumbsDivider v-if="items.length - 1 !== index" />
+      </div>
     </VBreadcrumbs>
   </VContainer>
 </template>

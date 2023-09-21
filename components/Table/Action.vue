@@ -1,25 +1,19 @@
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
   id: number
   path: string
 }>()
+
+const productStore = useProductStore()
 
 const modalDeleteIsOpen = ref(false)
 const loading = ref(false)
 
 async function onConfirm(e: any) {
   loading.value = true
-  await deleteItem()
+  productStore.DELETE_PRODUCT(props.id)
   loading.value = false
   e.close()
-}
-
-function deleteItem() {
-  return new Promise((resolve: (value?: any) => void) => {
-    setTimeout(() => {
-      resolve()
-    }, 2000)
-  })
 }
 </script>
 
