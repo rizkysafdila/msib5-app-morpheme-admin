@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/google-fonts',
     '@nuxtjs/tailwindcss',
-    ['@pinia/nuxt', { disableVuex: true }],
+    '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@morpheme/nuxt',
@@ -47,6 +47,15 @@ export default defineNuxtConfig({
     families: {
       Poppins: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
+  },
+
+  pinia: {
+    disableVuex: true,
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
   },
 
   // https://gitsindonesia.github.io/ui-component/

@@ -1,31 +1,24 @@
 <script lang="ts" setup>
-interface IHomeDashboardCard {
-  title: string
-  icon: string
-  stats: number
-  percentage: number
-}
-
 defineProps<{
-  card: IHomeDashboardCard
-}>
+  item: ICardStatistic
+}>()
 </script>
 
 <template>
   <VCard shadow="sm" header-class="flex justify-between items-center">
     <template #header>
       <VText font-weight="medium">
-        {{ card.title }}
+        {{ item.title }}
       </VText>
     </template>
     <template #header.append>
-      <VIcon name="ic:baseline-10k" />
+      <VIcon size="sm" :name="item.icon" />
     </template>
     <VText variant="display-xs" font-weight="semibold">
-      {{ toCurrency(card.stats) }}
+      {{ item.stats }}
     </VText>
     <VText class="mt-1">
-      {{ `+${stats.percentage}% from last month` }}
+      {{ `+${item.percentage}% from last month` }}
     </VText>
   </VCard>
 </template>

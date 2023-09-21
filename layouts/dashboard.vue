@@ -1,28 +1,12 @@
 <script setup lang="ts">
 import { breakpointsTailwind } from '@vueuse/core'
-import type { VBreadcrumbItemProps } from '@morpheme/breadcrumbs'
 
 const router = useRouter()
-
+const colorMode = useColorMode()
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const isMobile = breakpoints.smaller('sm') // only smaller than lg
-const isAsideOpen = ref(true)
+const isAsideOpen = ref(false)
 const isMini = ref(false)
-
-const items = ref<VBreadcrumbItemProps[]>([
-  {
-    title: 'tabler:home',
-    to: '/',
-  },
-  {
-    title: 'Products',
-    to: '/products',
-  },
-  {
-    title: 'Transactions',
-    to: '/transactions',
-  },
-])
 
 watchEffect(() => {
   isAsideOpen.value = !isMobile.value
@@ -30,17 +14,30 @@ watchEffect(() => {
 </script>
 
 <template>
-  <VAppShell padded-container>
-    <!-- header -->
+  <VAppShell padded-container main-class="bg-white dark:bg-gray-true-900">
+    <!-- navigation -->
     <template #navigation>
-      <VAppBar color="transparent" class="mt-5">
-        <VBreadcrumbs :items="items" />
+      <VAppBar
+        class="flex justify-between"
+        sticky
+      >
+        <VLogo :white="colorMode.value === 'dark'" />
+        <div class="flex">
+          <ColorModeSwitcher />
+          <!-- <VBtn
+            v-if="isMobile"
+            prefix-icon="ic:round-menu"
+            @click="isMini = !isMini"
+          /> -->
+        </div>
       </VAppBar>
+      <AppBreadcrumbs />
     </template>
 
     <!-- aside -->
     <template #aside>
       <VNavDrawer
+        v-model="isAsideOpen"
         v-model:mini="isMini"
         :fixed="isMobile"
         :overlay="isMobile"
@@ -48,6 +45,7 @@ watchEffect(() => {
         :class="{ 'z-20 !w-10/12 sidebar': isMobile }"
         color="emerald"
         shadow="lg"
+        height="auto"
       >
         <div class="flex justify-center items-center px-3 py-4" :class="{ 'justify-between': !isMini }">
           <VText
@@ -59,22 +57,19 @@ watchEffect(() => {
           >
             E-Commerce
           </VText>
-          <VBtn prefix-icon="ic:round-menu" @click="isMini = !isMini" />
+          <VBtn
+            v-if="!isMobile"
+            prefix-icon="ic:round-menu"
+            @click="isMini = !isMini"
+          />
         </div>
 
-        <AppSidebar />
+        <AppSidebarMenu />
       </VNavDrawer>
     </template>
 
     <!-- content -->
     <slot />
-
-    <!-- footer -->
-    <template #content.after>
-      <VText variant="sm" color="gray.500" class="m-4">
-        Copyright &copy; 2023 &middot; All rights reserved.
-      </VText>
-    </template>
   </VAppShell>
 </template>
 
