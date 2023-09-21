@@ -16,7 +16,7 @@ export const useProductStore = defineStore('product', {
       try {
         const { data } = await useNuxtApp().$axios.get('/products', {
           params: {
-            limit: 20,
+            limit: 10,
             select: 'id,title,description,category,price,images',
           },
         })

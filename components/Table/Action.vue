@@ -8,12 +8,17 @@ const productStore = useProductStore()
 
 const modalDeleteIsOpen = ref(false)
 const loading = ref(false)
+const isToastOpen = ref(false)
+const toastTitle = ref<string>('')
 
 async function onConfirm(e: any) {
   loading.value = true
   productStore.DELETE_PRODUCT(props.id)
   loading.value = false
   e.close()
+
+  isToastOpen.value = true
+  toastTitle.value = 'Product deleted successfully'
 }
 </script>
 
@@ -57,5 +62,15 @@ async function onConfirm(e: any) {
     >
       <p>Are you sure want to delete this item?</p>
     </VModal>
+
+    <VToast
+      v-model="isToastOpen"
+      color="success"
+      placement="top-end"
+      icon="tabler:circle-check"
+      :timeout="3000"
+    >
+      {{ toastTitle }}
+    </VToast>
   </ClientOnly>
 </template>
