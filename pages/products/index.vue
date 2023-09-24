@@ -79,7 +79,7 @@ const search = ref('')
         class="dark:bg-emerald-700 dark:border-emerald-700"
         :block="isMobile"
       >
-        Tambah
+        Add New
       </VBtn>
     </div>
     <VDataTable

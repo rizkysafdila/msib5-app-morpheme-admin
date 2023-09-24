@@ -148,8 +148,8 @@ const categories = computed(() => {
             <VBtn to="/products" class="!px-4" outlined>
               Cancel
             </VBtn>
-            <VBtn type="submit" color="primary" class="!px-6 dark:bg-emerald-700 dark:border-emerald-700">
-              Submit
+            <VBtn type="submit" color="success" class="!px-6 dark:bg-emerald-700 dark:border-emerald-700">
+              Update
             </VBtn>
           </div>
         </template>
