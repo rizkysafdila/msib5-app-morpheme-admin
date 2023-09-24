@@ -67,8 +67,8 @@ const loading = ref(false)
     <VTabs
       v-model="selectedTab"
       :items="items"
-      active-class="!text-primary-500"
-      slider-class="!bg-primary-500 !border-primary-500"
+      active-class="!text-emerald-500"
+      slider-class="!bg-emerald-500 !border-emerald-500"
     />
     <VContainer v-if="selectedTab === 0" padded>
       <TabHeader title="Pending" />

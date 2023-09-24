@@ -11,7 +11,7 @@ const route = useRoute()
       hover-class=" hover:!bg-gray-true-800"
       default-class="py-1 text-white text-md"
       :to="menu.to"
-      :active="route.path === menu.to"
+      :active="route.fullPath.split('/')[1] === menu.to.split('/')[1]"
     >
       <template #prepend.icon>
         <VIcon class="text-white" :name="menu.icon" />

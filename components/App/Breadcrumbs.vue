@@ -2,6 +2,7 @@
 import type { VBreadcrumbItemProps } from '@morpheme/breadcrumbs'
 
 const route = useRoute()
+const colorMode = useColorMode()
 
 const items = computed<VBreadcrumbItemProps[]>(() => {
   return (route.meta.breadcrumbs ?? []) as VBreadcrumbItemProps[]
@@ -11,12 +12,24 @@ const items = computed<VBreadcrumbItemProps[]>(() => {
 <template>
   <VContainer padded>
     <VBreadcrumbs>
-      <VBreadcrumbsItem to="/">
-        <VIcon name="tabler:home" class="p-1" />
+      <VBreadcrumbsItem
+        class="hover:!text-emerald-500"
+        active-class="!text-emerald-500 dark:!text-emerald-400 !bg-emerald-100 dark:!bg-emerald-900"
+        to="/"
+      >
+        <VIcon
+          name="tabler:home"
+          class="p-1"
+          :class="{ '!text-emerald-400': colorMode.value === 'dark' && route.path === '/' }"
+        />
       </VBreadcrumbsItem>
       <VBreadcrumbsDivider />
       <div v-for="item, index in items" :key="item.title">
-        <VBreadcrumbsItem :to="item.to">
+        <VBreadcrumbsItem
+          class="hover:!text-emerald-500"
+          active-class="!text-emerald-500 dark:!text-emerald-400 !bg-emerald-100 dark:!bg-emerald-900"
+          :to="item.to"
+        >
           {{ item.title }}
         </VBreadcrumbsItem>
         <VBreadcrumbsDivider v-if="items.length - 1 !== index" />
@@ -24,11 +37,3 @@ const items = computed<VBreadcrumbItemProps[]>(() => {
     </VBreadcrumbs>
   </VContainer>
 </template>
-
-<!-- <style lang="scss">
-:root {
-  --breadcrumbs-item-active-color: var(--color-primary-500)
-  --breadcrumbs-item-active-bg-color: var(--color-primary-50)
-  --breadcrumbs-item-hover-color: var(--color-primary-500)
-}
-</style> -->

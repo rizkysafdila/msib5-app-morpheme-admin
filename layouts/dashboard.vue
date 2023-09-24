@@ -5,8 +5,8 @@ const router = useRouter()
 const colorMode = useColorMode()
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const isMobile = breakpoints.smaller('sm') // only smaller than lg
-const isAsideOpen = ref(false)
-const isMini = ref(false)
+const isAsideOpen = ref<boolean>(false)
+const isMini = ref<boolean>(false)
 
 watchEffect(() => {
   isAsideOpen.value = !isMobile.value
@@ -22,13 +22,13 @@ watchEffect(() => {
         sticky
       >
         <VLogo :white="colorMode.value === 'dark'" />
-        <div class="flex">
+        <div class="flex gap-2">
           <ColorModeSwitcher />
-          <!-- <VBtn
+          <VBtn
             v-if="isMobile"
             prefix-icon="ic:round-menu"
-            @click="isMini = !isMini"
-          /> -->
+            @click="isAsideOpen = !isAsideOpen"
+          />
         </div>
       </VAppBar>
       <AppBreadcrumbs />
@@ -42,10 +42,10 @@ watchEffect(() => {
         :fixed="isMobile"
         :overlay="isMobile"
         :close-on-overlay-click="isMobile"
-        :class="{ 'z-20 !w-10/12 sidebar': isMobile }"
+        class="md:!h-auto"
+        :class="{ 'z-20 !w-8/12 sidebar': isMobile }"
         color="emerald"
         shadow="lg"
-        height="auto"
       >
         <div class="flex justify-center items-center px-3 py-4" :class="{ 'justify-between': !isMini }">
           <VText

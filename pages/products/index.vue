@@ -20,6 +20,16 @@ useHead({
   meta: [{ name: t('description'), content: t('Products Page') }],
 })
 
+// const { status: productListStatus }
+//   = await useAsyncData('productList',
+//     () =>
+//       productStore.index(),
+//     { lazy: true },
+//   )
+
+// if (productListStatus.value === 'error')
+//   throw createError({ statusCode: 404, statusMessage: 'Product List Not Found' })
+
 const headers = ref<VDataTableHeader[]>([
   {
     text: 'Image',
@@ -46,11 +56,7 @@ const headers = ref<VDataTableHeader[]>([
   },
 ])
 
-const page = ref(1)
-const itemsPerPage = ref(10)
 const search = ref('')
-
-watchEffect(productStore.index)
 </script>
 
 <template>
@@ -66,16 +72,19 @@ watchEffect(productStore.index)
         wrapper-class="w-full md:w-auto"
         prepend-icon="ri:search-line"
       />
-      <VBtn to="/products/create" prefix-icon="tabler:plus" color="primary" :block="isMobile">
+      <VBtn
+        to="/products/create"
+        prefix-icon="tabler:plus"
+        color="success"
+        class="dark:bg-emerald-700 dark:border-emerald-700"
+        :block="isMobile"
+      >
         Tambah
       </VBtn>
     </div>
     <VDataTable
-      v-model:page="page"
-      v-model:itemsPerPage="itemsPerPage"
       :headers="headers"
-      :items="productStore.products"
-      :total-items="productStore.products.length"
+      :items="productStore.getAllProducts"
       :loading="productStore.isLoading"
       server-side
       hover

@@ -46,6 +46,7 @@
     "@pinia-plugin-persistedstate/nuxt": "^1.1.2",
     "@pinia/nuxt": "^0.4.11",
     "@vee-validate/nuxt": "^4.11.6",
+    "@vee-validate/yup": "^4.11.6",
     "@vueuse/core": "^10.3.0",
     "@vueuse/nuxt": "^10.3.0",
     "pinia": "^2.1.6",
