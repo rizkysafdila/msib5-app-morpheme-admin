@@ -69,6 +69,7 @@ const { handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit(() => {
+  productStore.isLoading = true
   const updatedProduct = {
     title: name.value,
     category: category.value,
@@ -78,6 +79,7 @@ const onSubmit = handleSubmit(() => {
   } as IProduct
 
   productStore.UPDATE_PRODUCT(id, updatedProduct)
+  productStore.isLoading = false
   router.push('/products')
 })
 

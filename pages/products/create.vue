@@ -57,6 +57,7 @@ const { handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit(() => {
+  productStore.isLoading = true
   const newProduct = {
     id: Math.random() + 1,
     title: name.value,
@@ -67,6 +68,7 @@ const onSubmit = handleSubmit(() => {
   } as IProduct
 
   productStore.STORE_PRODUCT(newProduct)
+  productStore.isLoading = false
   router.push('/products')
 })
 

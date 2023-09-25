@@ -12,8 +12,10 @@ const loading = ref<boolean>(false)
 const isToastOpen = ref<boolean>(false)
 const toastTitle = ref<string>('')
 
-productStore.FETCH_SINGLE_PRODUCT(props.id)
-const product = productStore.product
+function showProduct() {
+  modalShowIsOpen.value = !modalShowIsOpen.value
+  productStore.FETCH_SINGLE_PRODUCT(props.id)
+}
 
 async function onConfirm(e: any) {
   loading.value = true
@@ -34,12 +36,12 @@ async function onConfirm(e: any) {
         prefix-icon-size="md"
         fab
         text
-        @click="modalShowIsOpen = !modalShowIsOpen"
+        @click="showProduct"
       />
       <VBtn
         prefix-icon="tabler:pencil"
         prefix-icon-size="md"
-        :to="`${path}/${id}`"
+        :to="`${path}/${id}/edit`"
         fab
         text
       />
@@ -55,28 +57,28 @@ async function onConfirm(e: any) {
     <VModal
       v-model="modalShowIsOpen"
       title="Detail Product"
-      :loading="loading"
+      :loading="productStore.isLoading"
     >
       <div class="flex flex-wrap gap-4">
-        <NuxtImg :src="product.images[0]" class="rounded-lg" />
+        <NuxtImg :src="productStore.product.images[0]" class="rounded-lg" />
         <div class="flex justify-between items-start w-full">
           <div class="flex flex-wrap">
             <VText class="w-full" variant="xl" font-weight="semibold">
-              {{ product.title }}
+              {{ productStore.product.title }}
             </VText>
             <VText class="w-full" variant="md" font-weight="medium">
-              {{ toCurrency(product.price) }}
+              {{ toCurrency(productStore.product.price) }}
             </VText>
           </div>
           <VBadge
             class="!text-gray-900 !bg-gray-300"
             small
           >
-            {{ toCapitalize(product.category) }}
+            {{ toCapitalize(productStore.product.category) }}
           </VBadge>
         </div>
         <div class="w-full">
-          <VInput class="!text-gray-true-900 dark:!text-white" text :model-value="product.description" label="Description" />
+          <VInput class="!text-gray-true-900 dark:!text-white" text :model-value="productStore.product.description" label="Description" />
         </div>
       </div>
     </VModal>

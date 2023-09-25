@@ -275,7 +275,7 @@ export const useProductStore = defineStore('product', {
         ],
       },
     ] as IProduct[],
-    product: {} as IProduct,
+    product: null,
   }),
   getters: {
     getAllProducts: (state) => {

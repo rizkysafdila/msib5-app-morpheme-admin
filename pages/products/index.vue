@@ -86,7 +86,6 @@ const search = ref('')
       :headers="headers"
       :items="productStore.getAllProducts"
       :loading="productStore.isLoading"
-      server-side
       hover
     >
       <template #item.image="{ item }">
